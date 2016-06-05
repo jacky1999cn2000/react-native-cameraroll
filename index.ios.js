@@ -46,13 +46,13 @@ class cameraroll extends Component {
   }
 
   render() {
-    let height = Dimensions.get('window').height;
-    let width = Dimensions.get('window').width;
-    let calculated = width/3;
+
+    let imageSize = Dimensions.get('window').width/3;
+
     return (
       <ScrollView style={styles.container}>
         <View style={styles.imageGrid}>
-          {this.state.images.map((image) => <Image style={[styles.image,{width:calculated,height:calculated}]} key={image.uri} source={{ uri: image.uri }} /> )}
+          {this.state.images.map((image) => <Image style={[{width:imageSize,height:imageSize}]} key={image.uri} source={{ uri: image.uri }} /> )}
         </View>
       </ScrollView>
     );
@@ -70,14 +70,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'flex-start'
-  },
-  image: {
-    // width: 76,
-    // height: 76,
-    // width: 102,
-    // height: 102,
-    //margin: 2,
-  },
+  }
 });
 
 AppRegistry.registerComponent('cameraroll', () => cameraroll);
