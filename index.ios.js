@@ -13,7 +13,8 @@ import {
   Image,
   CameraRoll,
   ScrollView,
-  Dimensions
+  Dimensions,
+  TouchableHighlight
 } from 'react-native';
 
 class cameraroll extends Component {
@@ -21,7 +22,8 @@ class cameraroll extends Component {
   constructor(props) {
      super(props);
      this.state = {
-       images: []
+       images: [],
+       selected: []
      };
   }
 
@@ -45,6 +47,14 @@ class cameraroll extends Component {
     console.log(err);
   }
 
+  selectImage = (uri) => {
+    console.log('uri',uri);
+    this.setState({
+      selected: this.state.selected.concat([uri])
+    });
+    console.log('selected',this.state.selected);
+  }
+
   render() {
 
     let imageSize = Dimensions.get('window').width/3;
@@ -52,7 +62,14 @@ class cameraroll extends Component {
     return (
       <ScrollView style={styles.container}>
         <View style={styles.imageGrid}>
-          {this.state.images.map((image) => <Image style={[{width:imageSize,height:imageSize}]} key={image.uri} source={{ uri: image.uri }} /> )}
+          {this.state.images.map((image) => {
+              return (
+                <TouchableHighlight key={image.uri} onPress={this.selectImage.bind(null,image.uri)}>
+                  <Image style={[{width:imageSize,height:imageSize}]} source={{ uri: image.uri }} />
+                </TouchableHighlight>
+              );
+            })
+          }
         </View>
       </ScrollView>
     );
